@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>code.elix_x.mods.skyblocks</groupId>
+  <artifactId>Skyblocks</artifactId>
+  <version>0.0.6-alpha-1.12</version>
+  <name>Skyblocks</name>
+  <description>Minecraft Mod Adding Skyblocks</description>
+  <url>https://github.com/Elix-x/Skyblocks</url>
+  <licenses>
+    <license>
+      <name>Creative Commons Attribution-NonCommercial 4.0 International Public License</name>
+      <url>https://creativecommons.org/licenses/by-nc/4.0/legalcode</url>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <name>Elix X</name>
+      <email>elix.x.ggl@gmail.com</email>
+      <url>https://github.com/Elix-x</url>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:git://github.com/Elix-x/Skyblocks.git</connection>
+    <developerConnection>scm:git:ssh://github.com:Elix-x/Skyblocks.git</developerConnection>
+    <url>https://github.com/Elix-x/Skyblocks/tree/master</url>
+  </scm>
+  <dependencies>
+    <dependency>
+      <groupId>code.elix_x.excore</groupId>
+      <artifactId>EXCore</artifactId>
+      <version>2.0.0-alpha11-1.12</version>
+      <scope>compile</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>*</artifactId>
+          <groupId>com.google.guava</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+  </dependencies>
+</project>
