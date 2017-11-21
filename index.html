@@ -36,12 +36,63 @@ function reApplyScrollPagesSizes(){
 	$(".scroll-page").get().forEach(function(spage){
 		spage.style.height = height + "px"
 	})
+	
+	scrollTo(scrollSnapID, 0, true)
 }
 
 $(function() {
 	reApplyScrollPagesSizes()
 	$(window).resize(reApplyScrollPagesSizes);
 });
+
+// Snapping
+
+const scrollSnapTime = 500
+var scrollSnapID = 0
+var scrolling = false
+
+function getScrollSnapPoints(){
+	return $(".scroll-snap").get()
+}
+	
+function preventDefault(e){
+	e = e || window.event;
+	if(e.preventDefault) e.preventDefault();
+	e.returnValue = false;  
+}
+
+window.onwheel = window.onmousewheel = function(event){
+	preventDefault(event)
+	scrollTo(scrollSnapID + (event.deltaY > 0 ? 1 : -1), scrollSnapTime, false)
+}
+
+window.ontouchmove = function(event){
+	preventDefault(event)
+	scrollTo(scrollSnapID + (event.deltaY > 0 ? 1 : -1), scrollSnapTime, false)
+}
+
+// left: 37, up: 38, right: 39, down: 40,
+// spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36
+var keys = {38: -1, 40: +1, 32: +1, 34: +1, 33: -1, 35: Number.POSITIVE_INFINITY, 36:Number.NEGATIVE_INFINITY};
+window.onkeydown = function(event){
+	var offset = keys[event.keyCode]
+	if(offset != undefined){
+		preventDefault(event)
+		scrollTo(scrollSnapID + offset, scrollSnapTime, false)
+	}
+}
+
+function scrollTo(id, time, force){
+	if(scrolling && !force) return;
+	var snaps = getScrollSnapPoints()
+	id = id.clamp(0, snaps.length-1)
+	if(id == scrollSnapID && !force) return;
+	
+	scrolling = true
+	$('html, body').animate({
+		scrollTop: $(snaps[id]).offset().top
+	}, time, "swing", function(){scrollSnapID = id;scrolling = false;});
+}
 
 </script>
 <head>
@@ -51,9 +102,11 @@ $(function() {
 </head>
 
 <body>
+<div class="page-scroller">
 <!--<div class="logo-container" id="logo" onClick="onLogoClick(this)"></div>-->
-<div class="scroll-page">This is a text!</div>
-<div class="scroll-page">This is a first scroll text!</div>
-<div class="scroll-page">This is a second scroll text!</div>
+<div class="scroll-page scroll-snap">This is a text!</div>
+<div class="scroll-page scroll-snap">This is a first scroll text!</div>
+<div class="scroll-page scroll-snap">This is a second scroll text!</div>
+</div>
 </body>
 </html>
