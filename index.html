@@ -18,14 +18,25 @@ Number.prototype.clamp = function(min, max){
 }
 </script>
 <script>
+//Logo
+
+var logoed = false
+function getLogo(){
+	return $(".logo").get()[0];
+}
 function onLogoClick(logo){
-	logo.classList.toggle("logo-container")
-	logo.classList.toggle("logo-container-animated")
+	logoem()
+}
+function logoem(){
+	logo = getLogo()
+	if(logoed) return;
+	logo.classList.toggle("logo")
+	logo.classList.toggle("logo-animated")
 	/*transitionEvent && logo.addEventListener(transitionEvent, function() {
 		console.log('Transition complete!  This is the callback, no library needed!');
 	});*/
 	//TODO 
-	setTimeout(function(){logo.style.display = "none"}, 1000)
+	setTimeout(function(){logo.style.display = "none";logoed = true;}, 1000)
 }
 
 // Scrolling
@@ -37,7 +48,7 @@ function reApplyScrollPagesSizes(){
 		spage.style.height = height + "px"
 	})
 	
-	scrollTo(scrollSnapID, 0, true)
+	if(logoed) scrollTo(scrollSnapID, 0, true)
 }
 
 $(function() {
@@ -83,6 +94,8 @@ window.onkeydown = function(event){
 }
 
 function scrollTo(id, time, force){
+	if(!logoed) return logoem();
+	
 	if(scrolling && !force) return;
 	var snaps = getScrollSnapPoints()
 	id = id.clamp(0, snaps.length-1)
@@ -103,7 +116,7 @@ function scrollTo(id, time, force){
 
 <body>
 <div class="page-scroller">
-<!--<div class="logo-container" id="logo" onClick="onLogoClick(this)"></div>-->
+<div class="logo scroll-page" onClick="onLogoClick(this)"></div>
 <div class="scroll-page scroll-snap">This is a text!</div>
 <div class="scroll-page scroll-snap">This is a first scroll text!</div>
 <div class="scroll-page scroll-snap">This is a second scroll text!</div>

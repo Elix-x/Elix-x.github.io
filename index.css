@@ -11,23 +11,13 @@ body {
 	font-style: normal;
 	font-weight: 200;
 }
-.logo-container {
-	width: 100%;
-	height: 100%;
-	
+.logo {
 	background-image: url(logo/2048.png);
     background-size: 100% 100%;
-	
-	position: fixed;
 }
-.logo-container-animated {
-	width: 100%;
-	height: 100%;
-	
+.logo-animated {	
 	background-image: url(logo/1024.apng);
     background-size: 100% 100%;
-	
-	position: fixed;
 }
 .page-scroller {
 	
