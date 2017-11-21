@@ -17,6 +17,17 @@ Number.prototype.clamp = function(min, max){
   return Math.min(Math.max(this, min), max)
 }
 </script>
+<script>
+function onLogoClick(logo){
+	logo.classList.toggle("logo-container")
+	logo.classList.toggle("logo-container-animated")
+	/*transitionEvent && logo.addEventListener(transitionEvent, function() {
+		console.log('Transition complete!  This is the callback, no library needed!');
+	});*/
+	//TODO 
+	setTimeout(function(){logo.style.display = "none"}, 1000)
+}
+</script>
 <head>
 <meta charset="utf-8">
 <title>index</title>
@@ -24,6 +35,6 @@ Number.prototype.clamp = function(min, max){
 </head>
 
 <body>
-<div id="logo-container"></div>
+<!--<div class="logo-container" id="logo" onClick="onLogoClick(this)"></div>-->
 </body>
 </html>
