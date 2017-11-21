@@ -27,6 +27,22 @@ function onLogoClick(logo){
 	//TODO 
 	setTimeout(function(){logo.style.display = "none"}, 1000)
 }
+
+// Scrolling
+
+function reApplyScrollPagesSizes(){
+	var width = $(window).width()
+	var height = $(window).height()
+	$(".scroll-page").get().forEach(function(spage){
+		spage.style.height = height + "px"
+	})
+}
+
+$(function() {
+	reApplyScrollPagesSizes()
+	$(window).resize(reApplyScrollPagesSizes);
+});
+
 </script>
 <head>
 <meta charset="utf-8">
@@ -36,5 +52,8 @@ function onLogoClick(logo){
 
 <body>
 <!--<div class="logo-container" id="logo" onClick="onLogoClick(this)"></div>-->
+<div class="scroll-page">This is a text!</div>
+<div class="scroll-page">This is a first scroll text!</div>
+<div class="scroll-page">This is a second scroll text!</div>
 </body>
 </html>
