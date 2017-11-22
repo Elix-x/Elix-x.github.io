@@ -88,15 +88,16 @@ $(function() {
 // Snapping
 
 const scrollSnapTime = 500
-var scrollSnapId = 0
+const scrollSnapParam = "snap"
 var scrolling = false
 
 function getScrollSnapId(){
-	return scrollSnapId
+//	return scrollSnapId
+	return Number(getUrlQueryParam(scrollSnapParam)) || 0
 }
 
 function setScrollSnapId(snap){
-	scrollSnapId = snap
+	setUrlQueryParam(scrollSnapParam, snap)
 }
 
 function getScrollSnapPoints(){
