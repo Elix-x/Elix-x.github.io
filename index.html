@@ -145,6 +145,58 @@ function scrollTo(id, time, force){
 	}, time, "swing", function(){setScrollSnapId(id);scrolling = false;});
 }
 
+// Contents
+
+function getContents(){
+	return $(".contents")
+}
+
+function genContents(contentFromPage){
+	var contents = getContents()
+	contents.html("")
+	$(".scroll-page").get().forEach(function(spage, index){
+		contents.html(function(i, ohtml){
+			return ohtml + "<tr><td class=\"contents-element\">" + contentFromPage($(spage), index) + "</td></tr>"
+		})
+	})
+}
+
+function genInterpunctContents(){
+	genContents(function(spage){return "•";})
+	$(".contents-element").get().forEach(function(aelem, i){
+		$(aelem).click(genTextContents)
+		if(i == getScrollSnapId()) $(aelem).toggleClass("contents-element-current")
+	})
+}
+
+function genTextContents(){
+	genContents(function(spage){return spage.attr("contents-title");})
+	$(".contents-element").get().forEach(function(aelem, i){
+		var elem = $(aelem)
+		elem.hover(function(){
+			elem.css("text-decoration", "underline")
+		}, function(){
+			elem.css("text-decoration", "none")
+		})
+		elem.on('click touchend', function(e){
+			scrollTo(i, scrollSnapTime, false)
+			if(e.type == "touchend") genInterpunctContents()
+		})
+		if(i == getScrollSnapId()) elem.toggleClass("contents-element-current")
+	})
+}
+
+function reposContents(){
+	getContents().css("top", (($(window).height() - getContents().height())/2) + "px")
+}
+
+$(function() {
+	genInterpunctContents()
+	reposContents()
+	$(window).resize(reposContents)
+	getContents().hover(genTextContents, genInterpunctContents)
+});
+
 </script>
 <head>
 <meta charset="utf-8">
@@ -153,11 +205,12 @@ function scrollTo(id, time, force){
 </head>
 
 <body>
+<table class="contents"></table>
 <div class="page-scroller">
 <!--<div class="logo scroll-page" onClick="onLogoClick(this)"></div>-->
-<div class="scroll-page scroll-snap">This is a text!</div>
-<div class="scroll-page scroll-snap">This is a first scroll text!</div>
-<div class="scroll-page scroll-snap">This is a second scroll text!</div>
+<div class="scroll-page scroll-snap" contents-title="A tag 1">This is a text!</div>
+<div class="scroll-page scroll-snap" contents-title="A tag first">This is a first scroll text!</div>
+<div class="scroll-page scroll-snap" contents-title="A tag 2st">This is a second scroll text!</div>
 </div>
 </body>
 </html>

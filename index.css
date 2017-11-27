@@ -5,6 +5,7 @@
 	--color-background: #212921;
 	--color-background-noise: #2B362B;
 	--color-text: aqua;
+	--color-text-highlight: #00C69E;
 }
 /* Body */
 body {
@@ -24,6 +25,17 @@ body {
 .logo-animated {	
 	background-image: url(logo/1024.apng);
     background-size: 100% 100%;
+}
+.contents {
+	position: fixed;
+	right: 0px;
+	color: var(--color-text);
+}
+.contents-element {
+	color: var(--color-text);
+}
+.contents-element-current {
+	color: var(--color-text-highlight);
 }
 .page-scroller {
 	
