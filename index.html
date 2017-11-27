@@ -202,6 +202,11 @@ $(function() {
 	getContents().hover(genTextContents, genInterpunctContents)
 });
 
+$(window).on("scroll-snap-end", function(){
+	if(getContents().hasClass("text")) genTextContents();
+	else genInterpunctContents();
+});
+
 </script>
 <head>
 <meta charset="utf-8">
