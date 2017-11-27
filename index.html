@@ -155,8 +155,9 @@ function getContents(){
 	return $(".contents")
 }
 
-function genContents(contentFromPage){
+function genContents(typeClass, contentFromPage){
 	var contents = getContents()
+	contents.removeClass("interpunct").removeClass("text").addClass(typeClass)
 	contents.html("")
 	$(".scroll-page").get().forEach(function(spage, index){
 		contents.html(function(i, ohtml){
@@ -166,7 +167,7 @@ function genContents(contentFromPage){
 }
 
 function genInterpunctContents(){
-	genContents(function(spage){return "•";})
+	genContents("interpunct", function(spage){return "•";})
 	$(".contents-element").get().forEach(function(aelem, i){
 		$(aelem).click(genTextContents)
 		if(i == getScrollSnapId()) $(aelem).toggleClass("contents-element-current")
@@ -174,7 +175,7 @@ function genInterpunctContents(){
 }
 
 function genTextContents(){
-	genContents(function(spage){return spage.attr("contents-title");})
+	genContents("text", function(spage){return spage.attr("contents-title");})
 	$(".contents-element").get().forEach(function(aelem, i){
 		var elem = $(aelem)
 		elem.hover(function(){
