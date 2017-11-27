@@ -142,7 +142,11 @@ function scrollTo(id, time, force){
 	scrolling = true
 	$('html, body').animate({
 		scrollTop: $(snaps[id]).offset().top
-	}, time, "swing", function(){setScrollSnapId(id);scrolling = false;});
+	}, time, "swing", function(){
+		setScrollSnapId(id)
+		scrolling = false
+		$(window).trigger("scroll-snap-end", id)
+	});
 }
 
 // Contents
