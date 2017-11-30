@@ -77,3 +77,35 @@ strong {
 	max-width: 100%;
 	max-height: 100%;
 }
+
+/* Bio */
+#bio {
+	display: flex;
+	flex-direction: column;
+	align-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+}
+#bio .quote {
+	width: 50vw;
+	text-align: justify;
+}
+#bio .author {
+	text-align: right;
+}
+#bio table {
+	width: 50vw;
+	height: auto;
+	table-layout: fixed;
+	border-collapse: collapse;
+}
+#bio table td {
+	width: 33%;
+	padding: 0;
+	margin: 0;
+}
+#bio table img {
+	max-width: 100%;
+	max-height: 100%;
+}
