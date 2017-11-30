@@ -19,6 +19,7 @@ body {
 	margin-left: 0px;
 	font-style: normal;
 	font-weight: 200;
+	overflow: hidden;
 }
 strong {
 	color: #5AE85A;
