@@ -35,7 +35,7 @@ strong {
 	right: 0px;
 }
 .contents-element {
-	
+	font-size: calc((3vh + 1vw)/2);
 }
 .contents-element-current {
 	color: #5AE85A;
