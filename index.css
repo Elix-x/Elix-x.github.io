@@ -11,6 +11,7 @@
 body {
 	font-family: source-sans-pro;
 	background-color: var(--color-background);
+	color: var(--color-text);
 	margin-top: 0px;
 	margin-right: 0px;
 	margin-bottom: 0px;
@@ -29,10 +30,9 @@ body {
 .contents {
 	position: fixed;
 	right: 0px;
-	color: var(--color-text);
 }
 .contents-element {
-	color: var(--color-text);
+	
 }
 .contents-element-current {
 	color: var(--color-text-highlight);
@@ -42,7 +42,6 @@ body {
 }
 .scroll-page {
 	text-align: center;
-	color: var(--color-text);
 }
 .scroll-snap {
 	
