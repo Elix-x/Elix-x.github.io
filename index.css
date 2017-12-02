@@ -9,8 +9,8 @@
 }
 /* Body */
 body {
-	background-color: #212921;
-	color: #09C309;
+	background-color: var(--color-background);
+	color: var(--color-text);
 	font-family: source-sans-pro;
 	font-size: 2vmax;
 	font-style: normal;
@@ -22,7 +22,7 @@ body {
 	overflow: hidden;
 }
 strong {
-	color: #5AE85A;
+	color: var(--color-text-strong);
 }
 .logo {
 	background-image: url(logo/2048.png);
@@ -40,7 +40,7 @@ strong {
 	font-size: calc((3vh + 1vw)/2);
 }
 .contents-element-current {
-	color: #5AE85A;
+	color: var(--color-text-strong);
 }
 .page-scroller {
 	
