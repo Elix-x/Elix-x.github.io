@@ -32,16 +32,6 @@ strong {
 	background-image: url(logo/1024.apng);
     background-size: 100% 100%;
 }
-.contents {
-	position: fixed;
-	right: 0px;
-}
-.contents-element {
-	font-size: calc((3vh + 1vw)/2);
-}
-.contents-element-current {
-	color: var(--color-text-strong);
-}
 .page-scroller {
 	
 }
@@ -53,6 +43,18 @@ strong {
 }
 
 /* Actual stuff*/
+
+/* Table of contents*/
+.contents {
+	position: fixed;
+	right: 0px;
+}
+.contents-element {
+	font-size: calc((3vh + 1vw)/2);
+}
+.contents-element-current {
+	color: var(--color-text-strong);
+}
 
 /* Home page */
 #home-table {
