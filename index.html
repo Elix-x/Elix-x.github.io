@@ -214,6 +214,29 @@ $(window).on("scroll-snap-end", function(){
 	else genInterpunctContents(true, 0, 0);
 });
 
+// Widgets
+
+function getWidgets(){
+	return $(".widgets")
+}
+
+function reposWidgets(){
+	getWidgets().css("top", (($(window).height() - getWidgets().height())/2) + "px")
+}
+
+$(function() {
+	reposWidgets()
+	$(window).resize(reposWidgets)
+});
+
+function openTwitterWidget(){
+	
+}
+
+function openDiscordWidget(){
+	
+}
+
 // Bio
 
 function reposQuote(){
@@ -234,6 +257,16 @@ $(function() {
 <link rel="shortcut icon" type="image/png" href="favicon.png"/>
 <body tracingsrc="logo/512.png" tracingopacity="100">
 <table class="contents"></table>
+<table class="widgets">
+  <tbody>
+    <tr>
+      <td><img src="logo/twitter.svg" alt="twitter" onClick="openTwitterWidget()"></td>
+    </tr>
+    <tr>
+      <td><img src="logo/discord.svg" alt="discord" onClick="openDiscordWidget()"></td>
+    </tr>
+  </tbody>
+</table>
 <div class="page-scroller">
 <!--<div class="logo scroll-page" onClick="onLogoClick(this)"></div>-->
 <div class="scroll-page scroll-snap" contents-title="Home">
