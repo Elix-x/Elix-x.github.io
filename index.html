@@ -222,12 +222,53 @@ function getWidgets(){
 
 function reposWidgets(){
 	getWidgets().css("top", (($(window).height() - getWidgets().height())/2) + "px")
+	$(".twitter-timeline").attr("style", "height: " + $(window).height() + "px")
+}
+
+function closeWidgets(){
+	getWidgets().animate({
+		left: -$(window).width()
+	}, 500, "swing")
+}
+
+function openWidgets(){
+	getWidgets().animate({
+		left: 0
+	}, 500, "swing")
 }
 
 $(function() {
 	reposWidgets()
 	$(window).resize(reposWidgets)
 });
+
+function getWidget(){
+	return $("#widget")
+}
+
+function isWidgetOpen(){
+	return !getWidget().is(":empty")
+}
+
+function closeWidget(){
+	if(isWidgetOpen()){
+		getWidget().animate({
+			left: -$(window).width()
+		}, 500, "swing", function(){
+			getWidget().empty()
+		})
+		openWidgets()
+	}
+}
+
+function openWidget(src){
+	closeWidget()
+	getWidget().html(src + '<div class="close-widget" onClick="closeWidget()"></div>')
+	getWidget().animate({
+		left: 0
+	}, 500, "swing")
+	closeWidgets()
+}
 
 function openTwitterWidget(){
 	
@@ -267,6 +308,7 @@ $(function() {
     </tr>
   </tbody>
 </table>
+<div id="widget" style="left: -100vw"></div>
 <div class="page-scroller">
 <!--<div class="logo scroll-page" onClick="onLogoClick(this)"></div>-->
 <div class="scroll-page scroll-snap" contents-title="Home">
