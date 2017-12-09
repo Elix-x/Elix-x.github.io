@@ -216,6 +216,8 @@ $(window).on("scroll-snap-end", function(){
 
 // Widgets
 
+const widgetAnimTime = 500
+
 function getWidgets(){
 	return $(".widgets")
 }
@@ -228,13 +230,13 @@ function reposWidgets(){
 function closeWidgets(){
 	getWidgets().animate({
 		left: -$(window).width()
-	}, 500, "swing")
+	}, widgetAnimTime, "swing")
 }
 
 function openWidgets(){
 	getWidgets().animate({
 		left: 0
-	}, 500, "swing")
+	}, widgetAnimTime, "swing")
 }
 
 $(function() {
@@ -254,7 +256,7 @@ function closeWidget(){
 	if(isWidgetOpen()){
 		getWidget().animate({
 			left: -$(window).width()
-		}, 500, "swing", function(){
+		}, widgetAnimTime, "swing", function(){
 			getWidget().empty()
 		})
 		openWidgets()
@@ -266,7 +268,7 @@ function openWidget(src){
 	getWidget().html(src + '<div class="close-widget" onClick="closeWidget()"></div>')
 	getWidget().animate({
 		left: 0
-	}, 500, "swing")
+	}, widgetAnimTime, "swing")
 	closeWidgets()
 }
 
