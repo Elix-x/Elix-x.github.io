@@ -1,12 +1,5 @@
 @charset "utf-8";
 /* CSS Document */
-/* Palette */
-:root {
-	--color-background: #212921;
-	--color-background-noise: #2B362B;
-	--color-text: #09C309;
-	--color-text-strong: #5AE85A;
-}
 /* Body */
 body {
 	background-color: var(--color-background);

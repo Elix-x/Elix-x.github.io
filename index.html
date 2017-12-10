@@ -281,6 +281,23 @@ function openDiscordWidget(){
 	openWidget("<embed height='100%' width='100%' src='https://widgetbot.io/embed/219142420112211981/219142420112211981/0002/' />")
 }
 
+// Themes
+const defaultTheme = 'dark'
+
+function getTheme(){
+	var theme = Cookies.get('theme')
+	return theme == undefined ? defaultTheme : theme
+}
+
+function setTheme(theme = defaultTheme){
+	Cookies.set('theme', theme)
+	$("head").append('<link href="themes/' + theme + '.css" rel="stylesheet" type="text/css">')
+}
+
+$(function(){
+	setTheme(getTheme())
+})
+
 // Bio
 
 function reposQuote(){
