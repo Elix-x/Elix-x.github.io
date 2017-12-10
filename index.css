@@ -86,7 +86,7 @@ strong {
 	height: 100%;
 	right: 74vw;
 	
-	background-color: var(--color-background-noise);
+	background-color: var(--color-background-accent);
 }
 .close-widget img {
 	object-fit: contain;
