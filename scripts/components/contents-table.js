@@ -49,7 +49,9 @@ function reposContents(){
 	getContents().css("top", (($(window).height() - getContents().height())/2) + "px")
 }
 
-$(function() {
+$(function(){
+	setStyle("/styles/components/contents-table.css", "contents-table")
+	
 	genInterpunctContents()
 	reposContents()
 	$(window).resize(reposContents)

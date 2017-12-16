@@ -21,7 +21,9 @@ function openWidgets(){
 	}, widgetAnimTime, "swing")
 }
 
-$(function() {
+$(function(){
+	setStyle("/styles/components/widgets.css", "widgets")
+	
 	reposWidgets()
 	$(window).resize(reposWidgets)
 });

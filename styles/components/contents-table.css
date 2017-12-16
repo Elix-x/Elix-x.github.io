@@ -1,0 +1,10 @@
+.contents {
+	position: fixed;
+	right: 0px;
+}
+.contents-element {
+	font-size: calc((3vh + 1vw)/2);
+}
+.contents-element-current {
+	color: var(--color-text-strong);
+}

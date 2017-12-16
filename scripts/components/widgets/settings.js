@@ -9,3 +9,7 @@ function openSettingsWidget(){
 	settingsStr += '</div>'
 	openWidget(settingsStr)
 }
+
+$(function(){
+	setStyle("/styles/components/widgets/settings.css", "settings-widget")
+})
