@@ -4,6 +4,12 @@
 <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 <script src="scripts/util/proto.js"></script>
 <script src="scripts/util/url-query.js"></script>
+<script src="scripts/components/snap.js"></script>
+<script src="scripts/components/scroll-pages.js"></script>
+<script src="scripts/components/contents-table.js"></script>
+<script src="scripts/components/themes.js"></script>
+<script src="scripts/components/widgets.js"></script>
+<script src="scripts/components/widgets/settings.js"></script>
 <script>
 //Logo
 
@@ -26,209 +32,7 @@ function logoem(){
 	setTimeout(function(){logo.style.display = "none";logoed = true;}, 1000)
 }
 
-// Scrolling
-
-function reApplyScrollPagesSizes(){
-	var width = $(window).width()
-	var height = $(window).height()
-	$(".scroll-page").get().forEach(function(spage){
-		spage.style.height = height + "px"
-	})
-	
-	if(logoed) scrollTo(getScrollSnapId(), 0, true)
-}
-
-$(function() {
-	reApplyScrollPagesSizes()
-	$(window).resize(reApplyScrollPagesSizes);
-});
-
-// Snapping
-
-const scrollSnapTime = 500
-const scrollSnapParam = "snap"
-var scrolling = false
-
-function getScrollSnapId(){
-//	return scrollSnapId
-	return Number(getUrlQueryParam(scrollSnapParam)) || 0
-}
-
-function setScrollSnapId(snap){
-	setUrlQueryParam(scrollSnapParam, snap)
-}
-
-function getScrollSnapPoints(){
-	return $(".scroll-snap").get()
-}
-	
-function preventDefault(e){
-	e = e || window.event;
-	if(e.preventDefault) e.preventDefault();
-	e.returnValue = false;  
-}
-
-window.onwheel = window.onmousewheel = function(event){
-	preventDefault(event)
-	scrollTo(getScrollSnapId() + (event.deltaY > 0 ? 1 : -1), scrollSnapTime, false)
-}
-
-window.ontouchmove = function(event){
-	preventDefault(event)
-	scrollTo(getScrollSnapId() + (event.deltaY > 0 ? 1 : -1), scrollSnapTime, false)
-}
-
-// left: 37, up: 38, right: 39, down: 40,
-// spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36
-var keys = {38: -1, 40: +1, 32: +1, 34: +1, 33: -1, 35: Number.POSITIVE_INFINITY, 36:Number.NEGATIVE_INFINITY};
-window.onkeydown = function(event){
-	var offset = keys[event.keyCode]
-	if(offset != undefined){
-		preventDefault(event)
-		scrollTo(getScrollSnapId() + offset, scrollSnapTime, false)
-	}
-}
-
-function scrollTo(id, time, force){
-	if(!logoed) return logoem();
-	
-	if(scrolling && !force) return;
-	var snaps = getScrollSnapPoints()
-	id = id.clamp(0, snaps.length-1)
-	if(id == getScrollSnapId() && !force) return;
-	
-	scrolling = true
-	$('html, body').animate({
-		scrollTop: $(snaps[id]).offset().top
-	}, time, "swing", function(){
-		setScrollSnapId(id)
-		scrolling = false
-		$(window).trigger("scroll-snap-end", id)
-	});
-}
-
-// Contents
-
-function getContents(){
-	return $(".contents")
-}
-
-function genContents(typeClass, contentFromPage, onComplete, force = false, fadeOut = 150, fadeIn = 150){
-	var contents = getContents()
-	if(!force && contents.hasClass(typeClass)) return;
-	var onFadeOut = function(){
-		contents.removeClass("interpunct").removeClass("text").addClass(typeClass)
-		contents.html("")
-		$(".scroll-page").get().forEach(function(spage, index){
-			contents.html(function(i, ohtml){
-				return ohtml + "<tr><td class=\"contents-element\">" + contentFromPage($(spage), index) + "</td></tr>"
-			})
-		})
-		if(fadeIn > 0) contents.fadeIn(fadeIn, onComplete); else onComplete();
-	}
-	if(fadeOut > 0) contents.fadeOut(fadeOut, onFadeOut); else onFadeOut();
-}
-
-function genInterpunctContents(force, fadeOut, fadeIn){
-	genContents("interpunct", function(spage){return "•";}, function(){
-		$(".contents-element").get().forEach(function(aelem, i){
-			$(aelem).click(genTextContents)
-			if(i == getScrollSnapId()) $(aelem).toggleClass("contents-element-current")
-		})
-	}, force, fadeOut, fadeIn)
-}
-
-function genTextContents(force, fadeOut, fadeIn){
-	genContents("text", function(spage){return spage.attr("contents-title");}, function(){
-		$(".contents-element").get().forEach(function(aelem, i){
-			var elem = $(aelem)
-			elem.hover(function(){
-				elem.css("text-decoration", "underline")
-			}, function(){
-				elem.css("text-decoration", "none")
-			})
-			elem.on('click touchend', function(e){
-				scrollTo(i, scrollSnapTime, false)
-				if(e.type == "touchend") genInterpunctContents()
-			})
-			if(i == getScrollSnapId()) elem.toggleClass("contents-element-current")
-		})
-	}, force, fadeOut, fadeIn)
-}
-
-function reposContents(){
-	getContents().css("top", (($(window).height() - getContents().height())/2) + "px")
-}
-
-$(function() {
-	genInterpunctContents()
-	reposContents()
-	$(window).resize(reposContents)
-	getContents().hover(function(){genTextContents()}, function(){genInterpunctContents()})
-});
-
-$(window).on("scroll-snap-end", function(){
-	if(getContents().hasClass("text")) genTextContents(true, 0, 0);
-	else genInterpunctContents(true, 0, 0);
-});
-
 // Widgets
-
-const widgetAnimTime = 500
-
-function getWidgets(){
-	return $(".widgets")
-}
-
-function reposWidgets(){
-	getWidgets().css("top", (($(window).height() - getWidgets().height())/2) + "px")
-	$(".twitter-timeline").attr("style", "height: " + $(window).height() + "px")
-}
-
-function closeWidgets(){
-	getWidgets().animate({
-		left: -$(window).width()
-	}, widgetAnimTime, "swing")
-}
-
-function openWidgets(){
-	getWidgets().animate({
-		left: 0
-	}, widgetAnimTime, "swing")
-}
-
-$(function() {
-	reposWidgets()
-	$(window).resize(reposWidgets)
-});
-
-function getWidget(){
-	return $("#widget")
-}
-
-function isWidgetOpen(){
-	return !getWidget().is(":empty")
-}
-
-function closeWidget(){
-	if(isWidgetOpen()){
-		getWidget().animate({
-			left: -$(window).width()
-		}, widgetAnimTime, "swing", function(){
-			getWidget().empty()
-		})
-		openWidgets()
-	}
-}
-
-function openWidget(src){
-	closeWidget()
-	getWidget().html(src + '<div class="close-widget" onClick="closeWidget()"></div>')
-	getWidget().animate({
-		left: 0
-	}, widgetAnimTime, "swing")
-	closeWidgets()
-}
 
 function openTwitterWidget(){
 	openWidget('<a class="twitter-timeline" data-height="' + $(window).height() + '" data-theme="dark" data-chrome="transparent noscrollbar nofooter noborders" href="https://twitter.com/Elix_x_mc?ref_src=twsrc%5Etfw">Tweets by Elix_x_mc</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"><' + '/script>')
@@ -237,48 +41,6 @@ function openTwitterWidget(){
 function openDiscordWidget(){
 	openWidget("<embed height='100%' width='100%' src='https://widgetbot.io/embed/219142420112211981/219142420112211981/0002/' />")
 }
-
-var settings = []
-function setting(setGen){
-	settings.push(setGen)
-}
-
-function openSettingsWidget(){
-	var settingsStr = '<div class="settings-widget">'
-	for(var setting of settings) settingsStr += setting()
-	settingsStr += '</div>'
-	openWidget(settingsStr)
-}
-
-// Themes
-const themes = {
-	'dark': '#212921',
-	'light': '#B0FBB0'
-}
-const defaultTheme = 'dark'
-
-function getTheme(){
-	var theme = Cookies.get('theme')
-	return theme == undefined ? defaultTheme : theme
-}
-
-function setTheme(theme = defaultTheme){
-	Cookies.set('theme', theme)
-	$("head").append('<link href="themes/' + theme + '.css" rel="stylesheet" type="text/css">')
-}
-
-$(function(){
-	setTheme(getTheme())
-	setting(function(){
-	/*
-		<table class="theme-table"><tr><td><div style="background-color: aqua">&nbsp;</div></td><td><div style="background-color: yellowgreen">&nbsp;</div></td></tr></table>
-	*/
-		var str = '<table class="theme-table"><tr>'
-		for(var theme in themes) str += '<td><div style="background-color: ' + themes[theme] + '" onClick="setTheme(\'' + theme + '\')">&nbsp;</div></td>'
-		str += '</tr></table>'
-		return str
-	})
-})
 
 // Bio
 
