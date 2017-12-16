@@ -11,7 +11,7 @@ function getTheme(){
 
 function setTheme(theme = defaultTheme){
 	Cookies.set('theme', theme)
-	$("head").append('<link href="themes/' + theme + '.css" rel="stylesheet" type="text/css">')
+	$("head").append('<link href="/themes/' + theme + '.css" rel="stylesheet" type="text/css">')
 }
 
 $(function(){
