@@ -1,0 +1,150 @@
+<!doctype html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+<script src="/scripts/util/proto.js"></script>
+<script src="/scripts/util/url-query.js"></script>
+<script src="/scripts/util/styles.js"></script>
+<script src="/scripts/util/select.js"></script>
+<script src="/scripts/components/themes.js"></script>
+<script src="/scripts/components/widgets.js"></script>
+<script src="/scripts/components/widgets/settings.js"></script>
+<script>
+function isProject(dir){
+	return dir['classifiers'] != undefined && dir['versions'] != undefined
+}
+
+function compileFileName(project, version, classifier = '', format = 'jar'){
+	var name = project + "-" + version
+	if(classifier != undefined && classifier != '') name += '-' + classifier
+	return name + '.' + format
+}
+
+function buildProjectFile(project, version, classifier, format){
+	var file = compileFileName(project, version, classifier, format)
+	return {
+		text: file,
+		id: 'file-' + file.replace(/\./g, '_')
+	}
+}
+
+function buildProjectVersionDir(group, project, version, classifiers){
+	var files = [buildProjectFile(project, version, '', 'pom')]
+	for(var classifier of classifiers) files.push(buildProjectFile(project, version, classifier, 'jar'))
+	return {
+		text: version,
+		id: 'version-' + version.replace(/\./g, '_'),
+		a_attr: {
+			'group': group,
+			'project': project,
+			'version': version
+		},
+		children: files
+	}
+}
+
+function buildProjectDir(dir, project, group){
+	var classifiers = dir['classifiers']
+	var versions = []
+	for(var version of dir['versions']) versions.push(buildProjectVersionDir(group ,project, version, classifiers))
+	return {
+		text: project,
+		id: 'project-' + project,
+		children: versions
+	}
+}
+
+function buildPackageDir(dir, name, group){
+	var children = []
+	for(var child in dir) if(child != undefined && dir[child] != undefined) children.push(buildDir(dir[child], child, group + (name != undefined ? name : '')))
+	return {
+		text: name != undefined ? name : 'root',
+		children: children
+	}
+}
+
+function buildDir(dir, name, group = ''){
+	return isProject(dir) ? buildProjectDir(dir, name, group) : buildPackageDir(dir, name, group + (group != '' ? '.' : ''))
+}
+
+function modVersionDom(node){
+	var instance = node.instance
+	var nodeInfo = node.node
+	var domNode = $('#' + nodeInfo.id)
+		
+	var html = '<div class="version-info">'
+	var domA = domNode.find("a")
+	var group = domA.attr('group')
+	var project = domA.attr('project')
+	var version = domA.attr('version')
+	var dep = group + ':' + project + ':' + version
+	html += '<div class="gradle-dep" onClick="selectText($(this))"><tt>' + dep + '</tt></div>'
+	
+	html += '<table class="files-table">'
+	html += '<tr><th><div>File</div></th><th><div>Hashes</div></th></tr>'
+	for(var child of nodeInfo.children){
+		var file = $('#' + child).text()
+		var fileUrl = group.replace(/\./g, '/') + '/' + project + '/' + version + '/' + file
+//		var md5 = $.get(fileUrl + ".MD5")
+//		var sha256 = $.get(fileUrl + ".SHA")
+		html += '<tr><td><a target="_blank" href="' + fileUrl + '"><div>' + file + '</div></a></td><td><a target="_blank" href="' + fileUrl + '.MD5"><div>md5</a></div></td><td><a target="_blank" href="' + fileUrl + '.SHA"><div>sha256</div></a></td></tr>'
+	}
+	html += '</table>'
+	
+	domNode.find("ul").remove()
+	domNode.append(html + "</div>")
+	$(domNode.find("div")[0]).hide().slideDown(350)
+}
+
+$(function(){
+	$.getJSON("maven2.json", success = function(maven){
+		var jstree = {
+			'core' : {
+				'data' : [],
+				'themes': {
+					'icons': false,
+					'dots': false,
+					'responsive': true
+				}
+			},
+			'plugins': ["conditionalselect"],
+			'conditionalselect': function(node, e){return false}
+		}
+		jstree['core']['data'] = buildDir(maven)
+		var tree = $('#maven-contents')
+		tree.jstree(jstree)
+		tree.on('before_open.jstree', function(e, node){
+			var nodeInfo = node.node
+			if(nodeInfo.id.startsWith('version-')) modVersionDom(node)
+		})
+		tree.on('close_node.jstree', (e, node) => $('#' + node.node.id).find("div").slideUp(350, function() { $(this).remove(); }))
+	})
+})
+</script>
+<head>
+<meta charset="utf-8">
+<title>Elix'x Maven Repo</title>
+<link href="/styles/main.css" rel="stylesheet" type="text/css">
+<link href="index.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+</head>
+<link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+<body tracingsrc="/logo/512.png" tracingopacity="100">
+<table class="contents"></table>
+<table class="widgets">
+	<tbody>
+		<tr>
+			<td><img src="/assets/gear.svg" alt="settings" onClick="openSettingsWidget()"></td>
+		</tr>
+	</tbody>
+</table>
+<div id="widget" style="left: -100vw"></div>
+<div id="maven-location" onClick="selectText($(this))"><pre>
+repositories {
+	maven { url "https://elix-x.github.io/maven2" }
+}
+</pre></div>
+<div id="maven-contents"></div>
+</body>
+</html>

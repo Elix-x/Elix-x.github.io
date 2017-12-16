@@ -1,0 +1,39 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* Gradle Location*/
+#maven-location {
+	margin: 5vh 12.5vw 5vh 25vw;
+	font-size: 1vmax;
+}
+
+/* Tree */
+#maven-contents {
+	margin: 5vh 12.5vw 5vh 25vw;
+}
+.version-info {
+	border: solid 0.1vmax;
+	margin: 0px 0px 2vh 2vw;
+	font-size: 1.5vmax;
+}
+.version-info * {
+	z-index: 1000 !important;
+	position: relative !important;
+	user-select: all !important;
+}
+.gradle-dep {
+	padding: 3vh 1vw 3vh;
+	border-bottom: dashed 0.1vmax;
+}
+.files-table {
+	margin-top: 2vh;
+	margin-bottom: 2vh;
+	table-layout: fixed;
+}
+.files-table div {
+	min-height: 2.5vmax;
+}
+.jstree-anchor {
+	font-size: 2vmax;
+	min-height: 2.2vmax;
+}
