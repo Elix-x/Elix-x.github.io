@@ -11,16 +11,22 @@
 	<script src="/scripts/components/widgets.js"></script>
 	<script src="/scripts/components/widgets/settings.js"></script>
 	<!-- InstanceBeginEditable name="Additional Scripts" -->
+	<script src="https://cdn.rawgit.com/showdownjs/showdown/1.8.6/dist/showdown.min.js"></script>
 	<script>
 		$(function(){
-			$.getJSON("posts.json", success = function(posts){
-				var postsList = $("#posts")
-				posts.forEach((postId) => {
-					$.getJSON("posts/" + postId + ".json", success = function(post){
-						postsList.append("<div class='post'><a href='post.html?post_id=" + postId + "'><div class='post-image'><img src='posts/" + post["image"] + "' alt='post image'></div><div class='post-title'>" + post["title"] + "</div></a></div>")
-					})
+			var postId = getUrlQueryParam("post_id")
+			$.getJSON("posts/" + postId + ".json", success = function(postInfo){
+				$("title").prepend(postInfo["title"])
+				$("#post-title").html("<h1>" + postInfo["title"] + "</h1>")
+				$("#post-image").css("background", "url(posts/" + postInfo["image"] + ") center center no-repeat")
+				$.get("posts/" + postId + ".md", success = function(postMd){
+					$("#post").html(new showdown.Converter().makeHtml(postMd))
 				})
 			})
+		})
+		
+		$(window).scroll(function(){
+			$("#post-image").css("filter", "blur(" + Math.sqrt($(window).scrollTop() / $(window).height()) * 25 + "px)")
 		})
 	</script>
 	<!-- InstanceEndEditable -->
@@ -29,7 +35,7 @@
 		<meta charset="utf-8">
 		
 		<!-- InstanceBeginEditable name="Title" -->
-		<title>Elix'x Blog</title>
+		<title> - Elix'x Blog</title>
 		<!-- InstanceEndEditable -->
 
 		<!-- InstanceBeginEditable name="Icon" -->
@@ -39,7 +45,7 @@
 		<link href="/styles/main.css" rel="stylesheet" type="text/css">
 
 		<!-- InstanceBeginEditable name="Head" -->
-		<link href="index.css" rel="stylesheet" type="text/css">
+		<link href="post.css" rel="stylesheet" type="text/css">
 		<!-- InstanceEndEditable -->
 		
 	</head>
@@ -51,14 +57,20 @@
 				<td><img src="/assets/gear.svg" alt="settings" onClick="openSettingsWidget()"></td>
 			</tr>
 			<!-- InstanceBeginEditable name="Widgets" -->
-			
+			<tr>
+				<td><a href="index.html"><img src="/assets/house.svg" alt="home"></a></td>
+			</tr>
 			<!-- InstanceEndEditable -->
 		</tbody>
 	</table>
 	<div id="widget" style="left: -100vw"></div>
 
 	<!-- InstanceBeginEditable name="Body" -->
-	<div id="posts"></div>
+	<div id="post-top">
+		<div id="post-image"></div>
+		<div id="post-title"></div>
+	</div>
+	<div id="post">A post</div>
 	<!-- InstanceEndEditable -->
 	
 	</body>

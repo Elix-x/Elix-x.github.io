@@ -1,0 +1,52 @@
+body {
+	overflow-x: hidden;
+}
+
+.widgets {
+	z-index: 10;
+}
+
+#post-top {
+	position: relative;
+	width: 100vw;
+	height: 100vh;
+}
+
+#post-image {
+	position: absolute;
+	width: 100vw;
+	height: 100vh;
+}
+
+#post-title {
+	position: absolute;
+	top: calc(50vh - 5vmax);
+	width: 100%;
+	text-align: center;
+}
+
+#post-title h1 {
+	mix-blend-mode: difference;
+	z-index: 10;
+}
+
+#post-image {
+	position: absolute;
+	padding: 0;
+	vertical-align: middle;
+	display: block;
+	margin: 0 auto;
+	max-height: 100%;
+	max-width: 100%;
+}
+
+#post {
+	position: relative;
+	width: 75vw;
+	min-height: 90vh;
+	left: 12.5vw;
+	top: 5vh;
+	font-size: 2vh;
+	margin-bottom: 5vh;
+	overflow-y: auto;
+}
