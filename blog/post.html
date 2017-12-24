@@ -13,6 +13,9 @@
 	<!-- InstanceBeginEditable name="Additional Scripts" -->
 	<script src="https://cdn.rawgit.com/showdownjs/showdown/1.8.6/dist/showdown.min.js"></script>
 	<script>
+		showdown.setOption('strikethrough', 'true')
+		showdown.setOption('emoji', 'true')
+		
 		$(function(){
 			var postId = getUrlQueryParam("post_id")
 			$.getJSON("posts/" + postId + ".json", success = function(postInfo){
