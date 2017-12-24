@@ -1,6 +1,7 @@
 /* Palette */
 :root {
 	--color-background: #212921;
+	--color-background-transparentoverlay: rgba(33,41,33,0.90);
 	--color-background-accent: #2B362B;
 	--color-background-contrast: #57FB57;
 	--color-text: #09C309;
