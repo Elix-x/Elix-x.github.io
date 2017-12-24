@@ -1,0 +1,23 @@
+@charset "utf-8";
+/* Body */
+body {
+	background-color: var(--color-background);
+	color: var(--color-text);
+	font-family: source-sans-pro;
+	font-size: 2vmax;
+	font-style: normal;
+	font-weight: 200;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+}
+strong {
+	color: var(--color-text-strong);
+}
+tt {
+	background-color: var(--color-background-accent);
+}
+a {
+	color: inherit;
+}

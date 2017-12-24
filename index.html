@@ -1,0 +1,156 @@
+<!doctype html>
+<html><!-- InstanceBegin template="/Templates/Default with Scroll Snap Pages.dwt" codeOutsideHTMLIsLocked="false" -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+	<script src="/scripts/util/proto.js"></script>
+	<script src="/scripts/util/url-query.js"></script>
+	<script src="/scripts/util/styles.js"></script>
+	<script src="/scripts/util/select.js"></script>
+	<script src="/scripts/components/themes.js"></script>
+	
+	<script src="/scripts/components/widgets.js"></script>
+	<script src="/scripts/components/widgets/settings.js"></script>
+	
+	<script src="/scripts/components/snap.js"></script>
+	<script src="/scripts/components/scroll-pages.js"></script>
+	<script src="/scripts/components/contents-table.js"></script>
+	<!-- InstanceBeginEditable name="Additional Scripts" -->
+	<script>
+		//Logo
+
+		var logoed = true
+		function getLogo(){
+			return $(".logo").get()[0];
+		}
+		function onLogoClick(logo){
+			logoem()
+		}
+		function logoem(){
+			logo = getLogo()
+			if(logoed) return;
+			logo.classList.toggle("logo")
+			logo.classList.toggle("logo-animated")
+			/*transitionEvent && logo.addEventListener(transitionEvent, function() {
+				console.log('Transition complete!  This is the callback, no library needed!');
+			});*/
+			//TODO 
+			setTimeout(function(){logo.style.display = "none";logoed = true;}, 1000)
+		}
+
+		// Widgets
+
+		function openTwitterWidget(){
+			openWidget('<a class="twitter-timeline" data-height="' + $(window).height() + '" data-theme="dark" data-chrome="transparent noscrollbar nofooter noborders" href="https://twitter.com/Elix_x_mc?ref_src=twsrc%5Etfw">Tweets by Elix_x_mc</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"><' + '/script>')
+		}
+
+		function openDiscordWidget(){
+			openWidget("<embed height='100%' width='100%' src='https://widgetbot.io/embed/219142420112211981/219142420112211981/0002/' />")
+		}
+
+		// Bio
+
+		function reposQuote(){
+			var quote = $(".quote")
+			quote.css("padding-top", (($(window).height() - 2*quote.height())/2) + "px")
+		}
+
+		$(function() {
+			reposQuote()
+			$(window).resize(reposQuote)
+		});
+	</script>
+	<!-- InstanceEndEditable -->
+	
+	
+	<head>
+		<meta charset="utf-8">
+		
+		<!-- InstanceBeginEditable name="Title" -->
+		<title>Elix'x Web</title>
+		<!-- InstanceEndEditable -->
+
+		<!-- InstanceBeginEditable name="Icon" -->
+		<link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+		<!-- InstanceEndEditable -->
+
+		<link href="/styles/main.css" rel="stylesheet" type="text/css">
+
+		<!-- InstanceBeginEditable name="Head" -->
+		<link href="index.css" rel="stylesheet" type="text/css">
+		<!-- InstanceEndEditable -->
+		
+	</head>
+	<body>
+	
+	<table class="widgets">
+		<tbody>
+			<tr>
+				<td><img src="/assets/gear.svg" alt="settings" onClick="openSettingsWidget()"></td>
+			</tr>
+			<!-- InstanceBeginEditable name="Widgets" -->
+			<tr>
+				<td><img src="/logo/twitter.svg" alt="twitter" onClick="openTwitterWidget()"></td>
+			</tr>
+			<tr>
+				<td><img src="/logo/discord.svg" alt="discord" onClick="openDiscordWidget()"></td>
+			</tr>
+			<!-- InstanceEndEditable -->
+		</tbody>
+	</table>
+	<div id="widget" style="left: -100vw"></div>
+
+	
+	<table class="contents"></table>
+	<div class="page-scroller">
+		<!-- InstanceBeginEditable name="Scroll Pages" -->
+		
+		<!--<div class="logo scroll-page" onClick="onLogoClick(this)"></div>-->
+		<div class="scroll-page scroll-snap" contents-title="Home">
+		<div id="home-table" style="display:flex;justify-content:center;align-items:center;">
+		<!--<div id="home-table-container">-->
+				<table>
+				<tbody>
+					<tr>
+						<td><a href=""><img src="logo/discord.svg" alt="discrod"></a></td>
+						<td><a href="https://github.com/Elix-x/"><img src="logo/github.png" alt="github"></a></td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><a href="index.html"><img src="logo/512.png" alt="logo"></a></td>
+						<td><a href="https://twitter.com/Elix_x_mc"><img src="logo/twitter.svg" alt="twitter"></a></td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td><a href="https://www.youtube.com/channel/UC_ir0P3v-v8olULsfoE-nxw"><img src="logo/youtube.png" alt="youtube"></a></td>
+					</tr>
+				</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="scroll-page scroll-snap" contents-title="Bio">
+		<div id="bio">
+			<div class="quote">
+				<p>"<i>Elix_x is a rather elusive species. It takes great patience to observe, even in it's presumably natural habitat.</i>"<br><span style="float:right;">-laszlogasd</span></p>
+			</div>
+			<table class="contact">
+			<tbody>
+				<tr>
+					<td><a href="https://twitter.com/Elix_x_mc"><img src="logo/twitter.svg" alt="twitter"></a></td>
+					<td><a href="https://github.com/Elix-x/"><img src="logo/github.png" alt="github"></a></td>
+					<td><a href=""><img src="logo/discord.svg" alt="discord"></a></td>
+				</tr>
+			</tbody>
+			</table>
+		</div>
+		</div>
+		<!-- InstanceEndEditable -->
+	</div>
+	<!-- InstanceBeginEditable name="Body" -->
+	
+	<!-- InstanceEndEditable -->
+	
+	
+	</body>
+<!-- InstanceEnd --></html>

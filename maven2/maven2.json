@@ -1,0 +1,38 @@
+{
+	"code": {
+		"elix_x": {
+			"excomms": {
+				"EXComms": {
+					"classifiers": ["", "javadoc", "sources"],
+					"versions": ["0.0.3-alpha", "0.0.4-alpha", "0.0.5-alpha", "0.0.6-alpha", "0.1.0-beta", "0.2.0-beta"]
+				}
+			},
+			"excore": {
+				"EXCore": {
+					"classifiers": ["", "javadoc", "sources", "obf"],
+					"versions": ["2.0.0-alpha2-1.11", "2.0.0-alpha3-1.11", "2.0.0-alpha4-1.11", "2.0.0-alpha5-1.11", "2.0.0-alpha6-1.11", "2.0.0-alpha6-1.11.2", "2.0.0-alpha7-1.11.2", "2.0.0-alpha8-1.11.2", "2.0.0-beta1-1.11.2", "2.0.0-alpha10-1.11.2", "2.0.0-alpha11-1.12", "2.0.0-alpha12-1.12", "2.0.0-alpha13-1.12", "2.0.0-alpha14-1.12.1", "2.0.0-alpha15-1.12.1"]
+				}
+			},
+			"mods": {
+				"creeperawareness": {
+					"Creeper-Awareness": {
+						"classifiers": ["", "javadoc", "sources", "obf"],
+						"versions": ["2.1.0-alpha1-1.12"]
+					}
+				},
+				"fei": {
+					"Forever-Enough-Items": {
+						"classifiers": ["", "javadoc", "sources", "obf"],
+						"versions": ["1.1.0-alpha1-1.11", "1.1.0-alpha1-1.11.2", "1.1.0-alpha2-1.11.2", "1.1.0-beta3-1.11.2"]
+					}
+				},
+				"skyblocks": {
+					"Skyblocks": {
+						"classifiers": ["", "javadoc", "sources", "obf"],
+						"versions": ["0.0.1-alpha-1.11", "0.0.2-alpha-1.11", "0.0.3-alpha-1.11", "0.0.4-alpha-1.11.2", "0.0.5-alpha-1.12", "0.0.6-alpha-1.12", "0.0.7-alpha-1.12", "0.0.8-alpha-1.12", "0.0.9-alpha-1.12", "0.1.0-beta-1.12", "0.1.1-alpha-1.12.1"]
+					}
+				}
+			}
+		}
+	}
+}

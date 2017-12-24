@@ -1,0 +1,9 @@
+/* Palette */
+:root {
+	--color-background: #B0FBB0;
+	--color-background-transparentoverlay: rgba(176,251,176,0.90);
+	--color-background-accent: #72F772;
+	--color-background-contrast: #056C05;
+	--color-text: #006C00;
+	--color-text-strong: #003A00;
+}
