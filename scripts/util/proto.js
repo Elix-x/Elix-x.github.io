@@ -12,3 +12,10 @@
 Number.prototype.clamp = function(min, max){
   return Math.min(Math.max(this, min), max)
 }// JavaScript Document
+
+
+
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};
