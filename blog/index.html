@@ -16,8 +16,8 @@
 			$.getJSON("posts.json", success = function(posts){
 				var postsList = $("#posts")
 				posts.forEach((postId) => {
-					$.getJSON("posts/" + postId + ".json", success = function(post){
-						postsList.append("<div class='post'><a href='post.html?post_id=" + postId + "'><div class='post-image'><img src='posts/" + post["image"] + "' alt='post image'></div><div class='post-title'>" + post["title"] + "</div></a></div>")
+					$.getJSON("posts/" + postId + "/metadata.json", success = function(post){
+						postsList.append("<div class='post'><a href='post.html?post_id=" + postId + "'><div class='post-image'><img src='posts/" + postId + "/" + post["image"] + "' alt='post image'></div><div class='post-title'>" + post["title"] + "</div></a></div>")
 					})
 				})
 			})

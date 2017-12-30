@@ -11,6 +11,7 @@
 	<script src="/scripts/components/widgets.js"></script>
 	<script src="/scripts/components/widgets/settings.js"></script>
 	<!-- InstanceBeginEditable name="Additional Scripts" -->
+	<script src="/scripts/util/link-type.js"></script>
 	<script src="https://cdn.rawgit.com/showdownjs/showdown/1.8.6/dist/showdown.min.js"></script>
 	<script>
 		showdown.setOption('strikethrough', 'true')
@@ -18,12 +19,24 @@
 		
 		$(function(){
 			var postId = getUrlQueryParam("post_id")
-			$.getJSON("posts/" + postId + ".json", success = function(postInfo){
+			$.getJSON("posts/" + postId + "/metadata.json", success = function(postInfo){
 				$("title").prepend(postInfo["title"])
 				$("#post-title").html("<h1>" + postInfo["title"] + "</h1>")
-				$("#post-image").css("background", "url(posts/" + postInfo["image"] + ") center center no-repeat")
-				$.get("posts/" + postId + ".md", success = function(postMd){
+				$("#post-image").css("background", "url(posts/" + postId.replaceAll(" ", "%20") + "/" + postInfo["image"] + ") center center no-repeat")
+				$.get("posts/" + postId + "/" + postInfo["content"], success = function(postMd){
 					$("#post").html(new showdown.Converter().makeHtml(postMd))
+					var images = $("#post").find("img").get()
+					for(var i = 0; i < images.length; i++){
+						var img = $(images[i])
+						img.addClass('mdimg')
+						if(!isLinkAbsolute(img.attr('src'))) img.attr('src', 'posts/' + postId + '/' + img.attr('src'))
+					}
+					var hrefs = $("#post").find("a").get()
+					for(var i = 0; i < hrefs.length; i++){
+						var href = $(hrefs[i])
+						href.addClass('mda')
+						if(!isLinkAbsolute(href.attr('href'))) href.attr('href', 'posts/' + postId + '/' + href.attr('href'))
+					}
 				})
 			})
 		})
