@@ -25,18 +25,17 @@
 				$("#post-image").css("background", "url(posts/" + postId.replaceAll(" ", "%20") + "/" + postInfo["image"] + ") center center no-repeat")
 				$.get("posts/" + postId + "/" + postInfo["content"], success = function(postMd){
 					$("#post").html(new showdown.Converter().makeHtml(postMd))
-					var images = $("#post").find("img").get()
-					for(var i = 0; i < images.length; i++){
-						var img = $(images[i])
-						img.addClass('mdimg')
-						if(!isLinkAbsolute(img.attr('src'))) img.attr('src', 'posts/' + postId + '/' + img.attr('src'))
+					var fixLinks = (selector, attr, clas) => {
+						var elems = $("#post").find(selector).get()
+						for(var i = 0; i < elems.length; i++){
+							var e = $(elems[i])
+							e.addClass(clas)
+							if(!isLinkAbsolute(e.attr(attr))) e.attr(attr, 'posts/' + postId + '/' + e.attr(attr))
+						}
 					}
-					var hrefs = $("#post").find("a").get()
-					for(var i = 0; i < hrefs.length; i++){
-						var href = $(hrefs[i])
-						href.addClass('mda')
-						if(!isLinkAbsolute(href.attr('href'))) href.attr('href', 'posts/' + postId + '/' + href.attr('href'))
-					}
+					fixLinks("img", "src", "post-contents-img")
+					fixLinks("a", "href", "post-contents-a")
+					fixLinks("link", "href", "post-contents-link")
 				})
 			})
 		})
