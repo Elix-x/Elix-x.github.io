@@ -50,3 +50,7 @@ body {
 	margin-bottom: 5vh;
 	overflow-y: auto;
 }
+
+.post-contents-img {
+	width: 100%;
+}
